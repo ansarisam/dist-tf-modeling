@@ -2,11 +2,11 @@ import argparse
 import tensorflow as tf
 from tensorflow_core.python.lib.io import file_io
 
+#Instantiate the distribution strategy -- ParameterServerStrategy. This needs to be in the beginning of the code.
+strategy = tf.distribute.experimental.ParameterServerStrategy(tf.distribute.experimental.CollectiveCommunication.RING)
+
 #Disable eager execution
 tf.compat.v1.disable_eager_execution()
-
-#Instantiate the distribution strategy -- ParameterServerStrategy. This needs to be in the beginning of the code.
-strategy = tf.distribute.experimental.ParameterServerStrategy()
 
 #Parse the command line arguments
 parser = argparse.ArgumentParser()

@@ -62,6 +62,6 @@ history = model.fit(train_dataset, epochs=100, steps_per_epoch=60, callbacks=[ca
 # Save the model to the cloud storage
 model.save("model.h5")
 with file_io.FileIO('model.h5', mode='r') as input_f:
-    with file_io.FileIO(FLAGS.output_path+ '/model.h5', mode='w+') as output_f:
+    with file_io.FileIO(FLAGS.output_path+ '/model.h5', mode='wb+') as output_f:
         output_f.write(input_f.read())
 

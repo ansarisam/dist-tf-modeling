@@ -55,13 +55,13 @@ with strategy.scope():
               metrics=['accuracy'])
 
 #Save checkpoints to the output location -- most probably on a cloud storage, such as GCS or S3
-callback = tf.keras.callbacks.ModelCheckpoint(filepath=FLAGS.output_path+"/model_ckpt.ckpt")
+callback = tf.keras.callbacks.ModelCheckpoint(filepath=FLAGS.output_path)
 # Finally, train or fit the model
-history = model.fit(train_dataset, epochs=100, steps_per_epoch=60, callbacks=[callback])
+history = model.fit(train_dataset, epochs=EPOCHS, steps_per_epoch=STEPS_PER_EPOCH, callbacks=[callback])
 
 # Save the model to the cloud storage
-# model.save("model.h5")
-# with file_io.FileIO('model.h5', mode='r') as input_f:
-#     with file_io.FileIO(FLAGS.output_path+ '/model.h5', mode='wb+') as output_f:
-#         output_f.write(input_f.read())
+model.save("model.h5")
+with file_io.FileIO('model.h5', mode='r') as input_f:
+    with file_io.FileIO(FLAGS.output_path+ '/model.h5', mode='wb+') as output_f:
+        output_f.write(input_f.read())
 

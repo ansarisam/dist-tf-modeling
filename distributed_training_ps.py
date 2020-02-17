@@ -60,8 +60,8 @@ callback = tf.keras.callbacks.ModelCheckpoint(filepath=FLAGS.output_path+"/model
 history = model.fit(train_dataset, epochs=EPOCHS, steps_per_epoch=STEPS_PER_EPOCH, callbacks=[callback], use_multiprocessing=True)
 
 # Save the model to the cloud storage
-model.save("model.h5")
-with file_io.FileIO('model.h5', mode='r') as input_f:
-    with file_io.FileIO(FLAGS.output_path+ '/model.h5', mode='wb+') as output_f:
-        output_f.write(input_f.read())
+model.save(FLAGS.output_path+"/full_model")
+# with file_io.FileIO('model.h5', mode='r') as input_f:
+#     with file_io.FileIO(FLAGS.output_path+ '/model.h5', mode='wb+') as output_f:
+#         output_f.write(input_f.read())
 

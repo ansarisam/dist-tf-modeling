@@ -35,7 +35,7 @@ BUFFER_SIZE = len(x_train)
 BATCH_SIZE_PER_REPLICA = 16
 GLOBAL_BATCH_SIZE = BATCH_SIZE_PER_REPLICA * 2
 EPOCHS = 10
-STEPS_PER_EPOCH = 10
+STEPS_PER_EPOCH = int(BUFFER_SIZE/EPOCHS/10)
 print("Buffer size: " + str(BUFFER_SIZE) + ", Steps per epoch: " + str(STEPS_PER_EPOCH))
 train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train)).shuffle(BUFFER_SIZE).batch(GLOBAL_BATCH_SIZE,drop_remainder=True)
 test_dataset = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(GLOBAL_BATCH_SIZE)
@@ -55,9 +55,9 @@ with strategy.scope():
               metrics=['accuracy'])
 
 #Save checkpoints to the output location -- most probably on a cloud storage, such as GCS or S3
-callback = tf.keras.callbacks.ModelCheckpoint(filepath=FLAGS.output_path)
+callback = tf.keras.callbacks.ModelCheckpoint(filepath=FLAGS.output_path+"/model_ckpt.")
 # Finally, train or fit the model
-history = model.fit(x_train, y_train, epochs=EPOCHS, steps_per_epoch=STEPS_PER_EPOCH, callbacks=[callback])
+history = model.fit(train_dataset, epochs=EPOCHS, steps_per_epoch=STEPS_PER_EPOCH, callbacks=[callback])
 
 # Save the model to the cloud storage
 model.save("model.h5")

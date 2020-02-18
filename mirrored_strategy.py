@@ -33,7 +33,7 @@ with strategy.scope():
               metrics=['accuracy'])
 
 # Finally, train or fot the model
-history = model.fit(test_dataset, validation_split=0.3, epochs=10)
+history = model.fit(test_dataset, epochs=10)
 
 # Visualize loss  and accuracy history
 # plt.plot(history.history['loss'], 'r--')

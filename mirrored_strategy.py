@@ -1,5 +1,4 @@
 import tensorflow as tf
-import matplotlib.pyplot as plt
 
 # Load MNIST data using built-in datasets download function
 mnist = tf.keras.datasets.mnist
@@ -33,15 +32,7 @@ with strategy.scope():
               metrics=['accuracy'])
 
 # Finally, train or fot the model
-history = model.fit(test_dataset, epochs=10)
-
-# Visualize loss  and accuracy history
-# plt.plot(history.history['loss'], 'r--')
-# plt.plot(history.history['accuracy'], 'b-')
-# plt.legend(['Training Loss', 'Training Accuracy'])
-# plt.xlabel('Epoch')
-# plt.ylabel('Percent')
-# plt.show();
+history = model.fit(test_dataset, epochs=100)
 
 # Evaluate the result using the test set.\
 evalResult = model.evaluate(x_test,  y_test, verbose=1)
